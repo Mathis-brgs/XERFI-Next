@@ -1,0 +1,49 @@
+// source de données
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL") 
+}
+
+// Générateur Prisma Client
+generator client {
+  provider = "prisma-client-js"
+}
+
+// modèle de table
+model PlanEdito {
+  IDPLAN_EDITO       Int      @id @default(autoincrement())
+  Code_etude         String   @unique @db.VarChar(20)
+  Titre_Etude        String   @db.VarChar(200)
+  Code_Collection    String   @db.VarChar(10)
+  Langue             String   @db.VarChar(2)
+  Annee_de_Collection String  @db.VarChar(4)  @map("Année_de_Collection")
+  Prix_Spot          Float
+  Nombres_de_pages Int @db.SmallInt
+  Date_de_parution   String   @db.VarChar(50)
+  SousTitreAffiche   String   @db.LongText
+  Etude_publiee      Int?     @default(0)       @db.TinyInt
+  etude_aparaitre    Int?     @default(0)       @db.TinyInt
+  Etude_publiee_abo  Int?     @default(0)       @db.TinyInt
+  Format_etude       Int?     
+  Lien_Titre         String?  @db.VarChar(200)
+  Secteur            String?  @db.VarChar(50)
+  sous_secteur       String?  @db.VarChar(100)
+  secteur_principal  Int?
+  sous_secteur_principal Int?
+  Code_titre         String?  @db.VarChar(10)
+  id_secteur         String?  @db.VarChar(100)
+  id_sous_secteur    String?  @db.VarChar(100)
+  Auteur             String?  @db.VarChar(256)
+  Balise_alt         String?  @db.VarChar(200)
+  Pays               String?  @db.VarChar(50)
+  Collection_NS      String?  @db.VarChar(100)
+
+  @@map("plan_edito")
+  @@index([Titre_Etude])
+  @@index([Code_Collection])
+  @@index([Annee_de_Collection], name: "Année_de_Collection")
+  @@index([Etude_publiee])
+  @@index([etude_aparaitre])
+  @@index([Etude_publiee_abo])
+  @@index([Format_etude])
+}
