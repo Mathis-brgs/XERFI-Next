@@ -1,11 +1,13 @@
 "use client";
-
+import Image from "next/image";
 import { useState } from "react";
 
 type Etude = {
   IDPLAN_EDITO: number;
   Titre_Etude: string;
   Prix_Spot: number;
+  Balise_alt: string;
+  Code_titre: string;
 };
 
 type PanierClientProps = {
@@ -25,13 +27,23 @@ export function PanierClient({ etudes }: PanierClientProps) {
 
   return (
     <>
-      <ul className="flex flex-wrap gap-4">
+      <ul className="flex flex-wrap gap-4 justify-center">
         {etudes.map((e) => (
           <li
             key={e.IDPLAN_EDITO}
-            className="w-56 h-42 border p-4 rounded shadow bg-white flex flex-col justify-between"
+            className="w-72 h-42 border p-4 rounded shadow bg-white flex flex-col justify-between"
           >
-            <div className="font-bold">{e.Titre_Etude}</div>
+            <div className="flex flex-row gap-2 justify-start items-center">
+              <Image
+                src={`https://www.xerfi.com/IMAGESSITE/ETUDES/${e.Code_titre}_2.jpg`}
+                alt={e.Balise_alt}
+                width={70}
+                height={70}
+                className="object-contain rounded-full"
+              />
+
+              <div className="font-bold text-sm">{e.Titre_Etude}</div>
+            </div>
             <div className="text-right font-semibold">{e.Prix_Spot} €</div>
             <button
               onClick={() => togglePanier(e.IDPLAN_EDITO)}

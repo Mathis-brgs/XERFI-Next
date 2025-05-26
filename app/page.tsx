@@ -1,14 +1,15 @@
-import { prisma } from "../lib/prisma";
 import { PanierClient } from "./components/PanierClient";
 
 export default async function Home() {
-  const etudes = await prisma.planEdito.findMany({
-    select: {
-      IDPLAN_EDITO: true,
-      Titre_Etude: true,
-      Prix_Spot: true,
-    },
+  const res = await fetch("http://localhost:3000/api/etudes", {
+    cache: "no-store",
   });
+
+  if (!res.ok) {
+    throw new Error("Erreur lors du chargement des études");
+  }
+
+  const etudes = await res.json();
 
   return (
     <main className="p-8">
