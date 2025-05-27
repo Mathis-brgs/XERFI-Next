@@ -4,13 +4,16 @@ import { useState } from "react";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { Alert } from "../../components/ui/alert";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [token, setToken] = useState<string | null>(null);
+
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const router = useRouter();
 
   const handleLogin = async () => {
     setError(null);
@@ -34,6 +37,8 @@ export default function LoginPage() {
       setToken(data.token);
       localStorage.setItem("token", data.token);
       setSuccessMessage("Connexion réussie !");
+
+      router.push("/");
     } catch {
       setError("Erreur réseau");
       setToken(null);
@@ -81,8 +86,8 @@ export default function LoginPage() {
         </div>
 
         {token && (
-          <p className="mt-4 text-sm text-gray-600 break-all">
-            Token (debug) : {token}
+          <p /*className="mt-4 text-sm text-gray-600 break-all"*/>
+            {/* Token (debug) : {token} */}
           </p>
         )}
       </div>
